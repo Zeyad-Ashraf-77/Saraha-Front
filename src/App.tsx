@@ -1,14 +1,27 @@
-
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import Layout from "./Components/Layout/Layout";
+import Home from "./Components/Home/Home";
 
 function App() {
-
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+      ],
+    },
+  ]);
 
   return (
     <>
-   <h1 className='text-center text-5xl bg-red-500 ' > hello in My Saraha app Zeyad ❤️❤️❤️✌️ </h1>
+      <RouterProvider router={router}></RouterProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
