@@ -1,5 +1,7 @@
 @import "tailwindcss";
-
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
 @layer base {
   h1,
   h2,
