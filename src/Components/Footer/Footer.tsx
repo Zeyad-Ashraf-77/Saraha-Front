@@ -2,8 +2,12 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div>
-      <h1 className='bg-blue-600' >Footer Page </h1>
-    </div>
+     <>
+
+          {/* ===== Footer ===== */}
+      <footer className="py-6 text-gray-600 text-sm">
+        © {new Date().getFullYear()} SarahaApp — All Rights Reserved.
+      </footer>
+     </>
   )
 }
