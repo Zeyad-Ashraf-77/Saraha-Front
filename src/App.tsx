@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import { AuthProvider } from "./Context/AuthContext";
-import ProtectedRoute from "./Components/ProtectedRoute";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
@@ -16,6 +14,7 @@ import NotFound from "./Components/NotFound/NotFound";
 import ConfirmEmail from "./Components/ConfirmEmail/ConfirmEmail";
 import ForgetPassword from "./Components/ForgetPassword/ForgetPassword";
 import ResetPassword from "./Components/ResetPassword/ResetPassword";
+import ProtectedRoute from "./Components/ProtectedRote";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +22,7 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
+        { index: true, element: <Home /> },
         {
           path: "login",
           element: <Login />,
@@ -32,29 +32,53 @@ function App() {
           element: <Register />,
         },
         {
-          element: <ProtectedRoute />, // كل الصفحات التالية محمية
-          children: [
-            { index: true, element: <Home /> },
-            { path: "dashboard", element: <Dashboard /> },
-            { path: "userProfile", element: <UserProfile /> },
-            { path: "shareProfile", element: <ShareProfile /> },
-            { path: "messages", element: <Messages /> },
-            { path: "sendMessage", element: <SendMessage /> },
-            { path: "settings", element: <Settings /> },
-            { path: "confirmEmail", element: <ConfirmEmail /> },
-          ],
+          path: "dashboard",
+          element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
         },
-        { path: "forgetPassword", element: <ForgetPassword /> },
-        { path: "resetPassword", element: <ResetPassword /> },
-        { path: "*", element: <NotFound /> },
+        {
+          path: "userProfile",
+          element: <ProtectedRoute><UserProfile /></ProtectedRoute>,
+        },
+        {
+          path: "shareProfile",
+          element: <ProtectedRoute><ShareProfile /></ProtectedRoute>,
+        },
+        {
+          path: "messages",
+          element: <ProtectedRoute><Messages /></ProtectedRoute>,
+        },
+        {
+          path: "sendMessage",
+          element: <ProtectedRoute><SendMessage /></ProtectedRoute>,
+        },
+        {
+          path: "settings",
+          element: <ProtectedRoute><Settings /></ProtectedRoute>,
+        },
+        {
+          path: "confirmEmail",
+          element: <ProtectedRoute><ConfirmEmail /></ProtectedRoute>,
+        },
+        {
+          path: "forgetPassword",
+          element: <ForgetPassword />,
+        },
+        {
+          path: "resetPassword",
+          element: <ProtectedRoute><ResetPassword /></ProtectedRoute>,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
       ],
     },
   ]);
 
   return (
-    <AuthProvider>
+ <>
       <RouterProvider router={router}></RouterProvider>
-    </AuthProvider>
+ </>
   );
 }
 

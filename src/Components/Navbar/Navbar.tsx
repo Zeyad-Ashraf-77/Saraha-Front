@@ -1,14 +1,15 @@
-import React from 'react'
+
 import { FaRegCommentDots } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../Context/AuthContext'
+import { getToken, removeToken } from '../utils/auth';
+
 
 export default function Navbar() {
-  const { token, logout } = useAuth();
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
+ const isLogin = getToken();
   const handleLogout = () => {
-    logout();
+    removeToken();
     navigate("/login");
   };
 
@@ -33,13 +34,20 @@ export default function Navbar() {
         <li>
           <Link to="/" className="block py-2 px-3 text-white bg-pink-700 rounded-sm md:bg-transparent md:text-pink-700 md:p-0 dark:text-white md:dark:text-pink-500" aria-current="page">Home</Link>
         </li>
-        <li>
-          <Link to="login" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</Link>
-        </li>
-        <li>
-          <Link to="register" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</Link>
-        </li>
-        {token && (
+        {
+          !isLogin && (
+            <li>
+              <Link to="login" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Login</Link>
+            </li>
+          )
+        }
+        {
+          !isLogin && (
+            <li>
+              <Link to="register" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</Link>
+            </li>
+          )
+        }      
           <li>
             <button
               onClick={handleLogout}
@@ -48,7 +56,7 @@ export default function Navbar() {
               Logout
             </button>
           </li>
-        )}
+     
       </ul>
     </div>
   </div>

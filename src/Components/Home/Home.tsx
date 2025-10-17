@@ -1,7 +1,17 @@
 import { Button, Card } from "flowbite-react";
 import { MessageSquare, ShieldCheck, Share2, ArrowRight } from "lucide-react";
-
+import { useEffect } from "react";
+import { getToken } from "../utils/auth";
 export default function Home() {
+
+
+
+  useEffect(() => {
+    const token = getToken();
+    console.log(token);
+    
+
+  }, []);
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center text-center">
       {/* ===== Hero Section ===== */}
