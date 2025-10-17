@@ -2,6 +2,9 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { useAuth } from "../../Context/AuthContext";
+import { useEffect } from "react";
+
 export type LoginForm = {
   email: string;
   password: string;
@@ -9,6 +12,15 @@ export type LoginForm = {
 
 export default function Login() {
   const navigate = useNavigate();
+  const { setToken } = useAuth();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/");
+    }
+}, [navigate]);
+
   async function handleSubmit(values: LoginForm) {
     try {
       const { data } = await axios.post(
@@ -19,8 +31,10 @@ export default function Login() {
         }
       );
       console.log(data);
-      if ((data?.message as unknown as string) == "Sign-in successful") {
-        navigate("/");
+      if (data.message==="Sign-in successful") {
+
+        setToken(data.token);
+       navigate("/");
       }
     } catch (error) {
       console.log(error);
@@ -104,6 +118,8 @@ export default function Login() {
         >
           Login
         </button>
+        <span className="text-pink-600 font-bold cursor-pointer" onClick={() => navigate("/forgetPassword")} > are you forget your Password?</span>
+       
       </form>
     </div>
   );

@@ -1,8 +1,17 @@
 import React from 'react'
 import { FaRegCommentDots } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../../Context/AuthContext'
 
 export default function Navbar() {
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <>
      
@@ -30,6 +39,16 @@ export default function Navbar() {
         <li>
           <Link to="register" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</Link>
         </li>
+        {token && (
+          <li>
+            <button
+              onClick={handleLogout}
+              className="block py-2 px-3 text-white bg-red-600 rounded-sm hover:bg-red-700 md:bg-transparent md:text-red-600 md:p-0 md:hover:text-red-700 font-bold"
+            >
+              Logout
+            </button>
+          </li>
+        )}
       </ul>
     </div>
   </div>
