@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { setToken } from "../utils/auth";
 
-
 export type LoginForm = {
   email: string;
   password: string;
@@ -23,8 +22,8 @@ export default function Login() {
         }
       );
       if(data.message === "Sign-in successful") {
-        navigate("/");
         setToken(data.accessToken);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);
