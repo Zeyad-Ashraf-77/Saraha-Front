@@ -2,7 +2,6 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAuth } from "../../Context/AuthContext";
 import { useEffect } from "react";
 
 export type LoginForm = {
@@ -12,7 +11,6 @@ export type LoginForm = {
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setToken } = useAuth();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -33,7 +31,6 @@ export default function Login() {
       console.log(data);
       if (data.message==="Sign-in successful") {
 
-        setToken(data.token);
        navigate("/");
       }
     } catch (error) {

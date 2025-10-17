@@ -1,7 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import { AuthProvider } from "./Context/AuthContext";
-import ProtectedRoute from "./Components/ProtectedRoute";
 import Layout from "./Components/Layout/Layout";
 import Home from "./Components/Home/Home";
 import Login from "./Components/Login/Login";
@@ -32,7 +30,7 @@ function App() {
           element: <Register />,
         },
         {
-          element: <ProtectedRoute />, // كل الصفحات التالية محمية
+          element: <Layout /> , // كل الصفحات التالية محمية
           children: [
             { index: true, element: <Home /> },
             { path: "dashboard", element: <Dashboard /> },
@@ -52,10 +50,9 @@ function App() {
   ]);
 
   return (
-    <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </AuthProvider>
+    <RouterProvider router={router}></RouterProvider>
   );
+  
 }
 
 export default App;
