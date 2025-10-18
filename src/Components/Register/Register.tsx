@@ -11,9 +11,9 @@ export type IRegisterFormValues = {
   age: string;
 }
 
-
 export default function Register() {
   const navigate = useNavigate();
+
   async function handleSubmit(values: IRegisterFormValues) {
     try {
       const formData = new FormData();
@@ -35,7 +35,7 @@ export default function Register() {
       );
       console.log(data);
       if (data?.message as unknown as string == "User created successfully") {
-        navigate("/login");
+        navigate("/ConfirmEmail");
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +47,12 @@ export default function Register() {
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
     rePassword: Yup.string().oneOf([Yup.ref('password')], "Passwords must match").required("Confirm password is required"),
     name: Yup.string().required("Name is required"),
-    phone: Yup.string().matches(/^\d{3}-\d{3}-\d{4}$/, "Phone number must be in the format 123-456-7890").required("Phone number is required"),
+    phone: Yup.string()
+      .matches(
+        /^0?(10|11|12|15)[0-9]{8}$/, 
+        "Phone number must be a valid Egyptian number (e.g., 01012345678, 01123456789, 01234567890, 01556789012)"
+      )
+      .required("Phone number is required"),
     age: Yup.number().min(1, "Age must be at least 1").max(120, "Age must be at most 120").required("Age is required"), 
   });
 
